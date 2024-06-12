@@ -199,7 +199,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                               .authHelper.user!.uid
                                                       ? const Color(0xffD9FDD3)
                                                       : Colors.grey
-                                                          .withOpacity(0.2),
+                                                          .withOpacity(0.3),
                                               borderRadius: BorderRadius.circular(
                                                 20
                                                  ),
