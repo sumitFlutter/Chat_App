@@ -33,7 +33,10 @@ class _ChatScreenState extends State<ChatScreen> {
                   onPressed: () {
                     Get.back();
                   },
-                  icon: const Icon(Icons.arrow_back_ios_new,size: 20,)),
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new,
+                    size: 20,
+                  )),
               const SizedBox(
                 width: 4,
               ),
@@ -77,27 +80,29 @@ class _ChatScreenState extends State<ChatScreen> {
           )
         ],
       ),
-      body: Stack(
+      body: Column(
         children: [
-          Obx(() => themeController.pTheme.value
-              ? Image.asset(
-                  "assets/background/dark.jpg",
-                  height: MediaQuery.sizeOf(context).height,
-                  width: MediaQuery.sizeOf(context).width,
-                  fit: BoxFit.cover,
-                  filterQuality: FilterQuality.high,
-                )
-              : Image.asset(
-                  "assets/background/light1.jpg",
-                  height: MediaQuery.sizeOf(context).height,
-                  width: MediaQuery.sizeOf(context).width,
-                  fit: BoxFit.cover,
-                  filterQuality: FilterQuality.high,
-                )),
-          Column(
-            children: [
-              Expanded(
-                child: StreamBuilder(
+          SizedBox(
+            height: MediaQuery.sizeOf(context).height * 0.8,
+            width: MediaQuery.sizeOf(context).width,
+            child: Stack(
+              children: [
+                Obx(() => themeController.pTheme.value
+                    ? Image.asset(
+                        "assets/background/dark.jpg",
+                        height: MediaQuery.sizeOf(context).height * 0.8,
+                        width: MediaQuery.sizeOf(context).width,
+                        fit: BoxFit.cover,
+                        filterQuality: FilterQuality.high,
+                      )
+                    : Image.asset(
+                        "assets/background/light1.jpg",
+                        height: MediaQuery.sizeOf(context).height * 0.8,
+                        width: MediaQuery.sizeOf(context).width,
+                        fit: BoxFit.cover,
+                        filterQuality: FilterQuality.high,
+                      )),
+                StreamBuilder(
                   stream: FireDBHelper.helper
                       .getLiveChat(AuthHelper.authHelper.user!.uid, model.uid!),
                   builder: (context, snapshot) {
@@ -115,7 +120,9 @@ class _ChatScreenState extends State<ChatScreen> {
                       }
                       return Column(
                         children: [
-                          Expanded(
+                          SizedBox(
+                            height: MediaQuery.sizeOf(context).height * 0.8,
+                            width: MediaQuery.sizeOf(context).width,
                             child: ListView.builder(
                               itemCount: l1.length,
                               itemBuilder: (context, index) {
@@ -175,30 +182,29 @@ class _ChatScreenState extends State<ChatScreen> {
                                       child: Container(
                                         width: l1[index].msg!.length >= 60
                                             ? MediaQuery.sizeOf(context).width *
-                                            0.45
+                                                0.45
                                             : l1[index].msg!.length >= 15
-                                            ? MediaQuery.sizeOf(context)
-                                            .width *
-                                            0.30
-                                            : MediaQuery.sizeOf(context)
-                                            .width *
-                                            0.20,
-
+                                                ? MediaQuery.sizeOf(context)
+                                                        .width *
+                                                    0.30
+                                                : MediaQuery.sizeOf(context)
+                                                        .width *
+                                                    0.20,
                                         margin: const EdgeInsets.all(10),
                                         padding: const EdgeInsets.all(10),
                                         decoration: BoxDecoration(
                                           color: themeController.pTheme.value
                                               ? l1[index].uid ==
-                                              AuthHelper
-                                                  .authHelper.user!.uid
-                                              ? const Color(0xff005C4B)
-                                              : const Color(0xff202C33)
+                                                      AuthHelper
+                                                          .authHelper.user!.uid
+                                                  ? const Color(0xff005C4B)
+                                                  : const Color(0xff202C33)
                                               : l1[index].uid ==
-                                              AuthHelper
-                                                  .authHelper.user!.uid
-                                              ? const Color(0xffD9FDD3)
-                                              : Colors.grey.withOpacity(0.2),
-
+                                                      AuthHelper
+                                                          .authHelper.user!.uid
+                                                  ? const Color(0xffD9FDD3)
+                                                  : Colors.grey
+                                                      .withOpacity(0.2),
                                           borderRadius: BorderRadius.only(
                                             bottomLeft: Radius.circular(5),
                                             bottomRight: Radius.circular(5),
@@ -240,36 +246,47 @@ class _ChatScreenState extends State<ChatScreen> {
                         ],
                       );
                     }
-                    return Container();
+                    return SizedBox(
+                      height: MediaQuery.sizeOf(context).height * 0.8,
+                      width: MediaQuery.sizeOf(context).width,
+                    );
                   },
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12),
-                child: TextField(
-                  controller: txtMessage,
-                  decoration: InputDecoration(
-                    hintText: "Type",
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        ChatModel c1 = ChatModel(
-                            uid: AuthHelper.authHelper.user!.uid,
-                            date: "${DateTime.now()}",
-                            time:
-                                "${DateTime.now().hour}:${DateTime.now().minute}",
-                            msg: txtMessage.text,
-                            displayDate:
-                                "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}");
-                        txtMessage.clear();
-                        FireDBHelper.helper.sendMessage(c1, model);
-                      },
-                      icon: const Icon(Icons.send),
-                    ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.sizeOf(context).height * 0.2,
+            width: MediaQuery.sizeOf(context).width,
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: TextField(
+                controller: txtMessage,
+                minLines: 1,
+                maxLines: 5,
+                textInputAction: TextInputAction.newline,
+                decoration: InputDecoration(
+                  hintText: "Send a message",
+                  suffixIcon: IconButton(
+                    onPressed: () async {
+                      ChatModel c1 = ChatModel(
+                          uid: AuthHelper.authHelper.user!.uid,
+                          date: "${DateTime.now()}",
+                          time:
+                              "${DateTime.now().hour}:${DateTime.now().minute}",
+                          msg: txtMessage.text,
+                          displayDate:
+                              "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}");
+                      await FireDBHelper.helper.sendMessage(c1, model);
+                      txtMessage.clear();
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    icon: const Icon(Icons.send),
                   ),
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+          )
         ],
       ),
     );
