@@ -1,10 +1,11 @@
-import 'package:chat_app_6099/screen/user/model/profile_model.dart';
-import 'package:chat_app_6099/utils/helpers/fcm_helper.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import '../../screen/chat/model/chat_model.dart';
+import '../../screen/user/model/profile_model.dart';
+import 'fcm_helper.dart';
 import 'firebase_auth_helper.dart';
 
 class FireDBHelper {
@@ -20,7 +21,7 @@ class FireDBHelper {
     await db.collection("user").doc(AuthHelper.authHelper.user!.uid).set({
       "name": model.name,
       "email": model.email,
-      "profile": model.profile,
+      "about": model.about,
       "number": model.number,
       "uid": model.uid,
       "token":FCMHelper.fcm.token
@@ -45,29 +46,30 @@ class FireDBHelper {
 
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> allContact() {
+  Future<QuerySnapshot<Map<String, dynamic>>> getAllContact() {
     return db
         .collection("user")
         .where("uid", isNotEqualTo: AuthHelper.authHelper.user!.uid)
-        .snapshots();
+        .get();
   }
 
   Future<void> sendMessage(ChatModel model, ProfileModel p1) async {
     if (chatId!=null) {
-      AddMessage(chatId!, model, p1);
+      addMessage1(chatId!, model, p1);
     } else {
       chatId = await addChatUID(p1);
-      AddMessage(chatId!, model, p1);
+      addMessage1(chatId!, model, p1);
     }
   }
 
-  Future<void> AddMessage(
+  Future<void> addMessage1(
       String docId, ChatModel model, ProfileModel p1) async {
     await db.collection("chat").doc(docId).collection("msg").add({
       "date": "${model.date}",
       "time": "${model.time}",
       "uid": AuthHelper.authHelper.user!.uid,
-      "msg": "${model.msg}"
+      "msg": "${model.msg}",
+      "displayDate":"${model.displayDate}",
     });
   }
 
@@ -77,7 +79,7 @@ class FireDBHelper {
       "name":[p1.name,currentUser!.name],
       "number":[p1.number,currentUser!.number],
       "email":[p1.email,currentUser!.email],
-      "profile":[p1.profile,currentUser!.profile]
+      "about":[p1.about,currentUser!.about]
     });
     return reference.id;
   }
@@ -101,11 +103,15 @@ class FireDBHelper {
       chatId=null;
     }
   }
-  Stream<QuerySnapshot<Map<String, dynamic>>>? getchat(String myUid,String userUid)
+  Stream<QuerySnapshot<Map<String, dynamic>>>? getLiveChat(String myUid,String userUid)
   {
     if (chatId!=null) {
       return  db.collection("chat").doc(chatId).collection("msg").orderBy("date").snapshots();
     }
     return null;
+  }
+  void deleteChat(String msgUID)
+  {
+    db.collection("chat").doc(chatId).collection("msg").doc(msgUID).delete();
   }
 }
