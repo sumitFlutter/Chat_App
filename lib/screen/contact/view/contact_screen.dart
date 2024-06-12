@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../utils/helpers/firebase_auth_helper.dart';
-import '../../../utils/helpers/firedb_helper.dart';
+import '../../../utils/helpers/fire_db_helper.dart';
 import '../../user/model/profile_model.dart';
 
 class ContactScreen extends StatefulWidget {
@@ -20,32 +20,32 @@ class _ContactScreenState extends State<ContactScreen> {
       appBar: AppBar(
         title: const Text("contact"),
       ),
-      body: StreamBuilder(
-        stream: FireDBHelper.helper.allContact(),
+      body: FutureBuilder(
+        future: FireDBHelper.helper.getAllContact(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text("${snapshot.error}");
           } else if (snapshot.hasData) {
-            List<ProfileModel> list = [];
+            List<ProfileModel> clist = [];
             QuerySnapshot? q1 = snapshot.data;
               List<QueryDocumentSnapshot>? listq = q1?.docs;
               for (var x in listq!) {
                 Map m1 = x.data() as Map;
                 ProfileModel p1 = ProfileModel.mapToModel(m1,x.id);
-                list.add(p1);
+                clist.add(p1);
               }
             return ListView.builder(
-              itemCount: list.length,
+              itemCount: clist.length,
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () async {
-                    await FireDBHelper.helper.getChat(AuthHelper.authHelper.user!.uid, list[index].uid!);
-                    Get.toNamed('chat',arguments: list[index]);
+                    await FireDBHelper.helper.getChat(AuthHelper.authHelper.user!.uid, clist[index].uid!);
+                    Get.toNamed('chat',arguments: clist[index]);
                   },
                   child: ListTile(
-                    leading: const CircleAvatar(radius: 30,),
-                    title:Text("${list[index].name}"),
-                    subtitle: Text("${list[index].number}"),
+                    leading:  CircleAvatar(radius: 30,child: Center(child: Text(clist[index].name!.substring(0,1).toUpperCase(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),)),),
+                    title:Text("${clist[index].name}"),
+                    subtitle: Text("${clist[index].about}"),
                   ),
                 );
               },

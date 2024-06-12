@@ -1,8 +1,5 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-
 import '../../screen/chat/model/chat_model.dart';
 import '../../screen/user/model/profile_model.dart';
 import 'fcm_helper.dart';
@@ -15,7 +12,7 @@ class FireDBHelper {
 
   var db = FirebaseFirestore.instance;
   String? chatId ;
-  ProfileModel? currentUser;
+  ProfileModel currentUser=ProfileModel(about: "",email: "",name: "  ",number: "",uid: "");
 
   Future<void> userProfile(ProfileModel model) async {
     await db.collection("user").doc(AuthHelper.authHelper.user!.uid).set({
@@ -23,7 +20,7 @@ class FireDBHelper {
       "email": model.email,
       "about": model.about,
       "number": model.number,
-      "uid": model.uid,
+      "uid": AuthHelper.authHelper.user!.uid,
       "token":FCMHelper.fcm.token
     });
   }
@@ -31,18 +28,18 @@ class FireDBHelper {
   Future<DocumentSnapshot<Map<String, dynamic>>> getUserProfile() {
     return db.collection("user").doc(AuthHelper.authHelper.user!.uid).get();
   }
-  Future<QuerySnapshot<Map<String, dynamic>>> getData()
+  Stream<QuerySnapshot<Map<String, dynamic>>> getRecentChatData()
   {
     return db
         .collection("chat")
         .where("uid", arrayContainsAny: [AuthHelper.authHelper.user!.uid])
-        .get();
+        .snapshots();
   }
   Future<void> getCurrentUser()
   async {
     DocumentSnapshot ds =await db.collection("user").doc(AuthHelper.authHelper.user!.uid).get();
     Map m1=ds.data()as Map;
-    currentUser=ProfileModel.mapToModel(m1, AuthHelper.authHelper.user!.uid);
+    currentUser=ProfileModel.mapToModel(m1, ds.id);
 
   }
 
@@ -76,10 +73,10 @@ class FireDBHelper {
   Future<String> addChatUID(ProfileModel p1) async {
     DocumentReference reference = await db.collection("chat").add({
       "uid": [p1.uid, AuthHelper.authHelper.user!.uid],
-      "name":[p1.name,currentUser!.name],
-      "number":[p1.number,currentUser!.number],
-      "email":[p1.email,currentUser!.email],
-      "about":[p1.about,currentUser!.about]
+      "name":[p1.name,currentUser.name],
+      "number":[p1.number,currentUser.number],
+      "email":[p1.email,currentUser.email],
+      "about":[p1.about,currentUser.about]
     });
     return reference.id;
   }
@@ -87,8 +84,8 @@ class FireDBHelper {
   async {
     QuerySnapshot qs=await db.collection("chat").where("uid",arrayContainsAny: [myUid,userUid]).get();
     List<DocumentSnapshot>dsList=qs.docs.where((e) {
-      List uids=e['uid'];
-      if(uids.contains(myUid) && uids.contains(userUid))
+      List uidS=e['uid'];
+      if(uidS.contains(myUid) && uidS.contains(userUid))
       {
         return true;
       }
