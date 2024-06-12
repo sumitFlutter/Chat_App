@@ -22,7 +22,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () =>  Scaffold(
+          () =>  Scaffold(
         appBar: AppBar(
           leadingWidth: 125,
           backgroundColor: themeController.pTheme.value?Colors.black54:Colors.white,
@@ -93,19 +93,19 @@ class _ChatScreenState extends State<ChatScreen> {
                   children: [
                     Obx(() => themeController.pTheme.value
                         ? Image.asset(
-                            "assets/background/dark.jpg",
-                            height: MediaQuery.sizeOf(context).height * 0.8,
-                            width: MediaQuery.sizeOf(context).width,
-                            fit: BoxFit.cover,
-                            filterQuality: FilterQuality.high,
-                          )
+                      "assets/background/dark.jpg",
+                      height: MediaQuery.sizeOf(context).height * 0.8,
+                      width: MediaQuery.sizeOf(context).width,
+                      fit: BoxFit.cover,
+                      filterQuality: FilterQuality.high,
+                    )
                         : Image.asset(
-                            "assets/background/light1.jpg",
-                            height: MediaQuery.sizeOf(context).height * 0.8,
-                            width: MediaQuery.sizeOf(context).width,
-                            fit: BoxFit.cover,
-                            filterQuality: FilterQuality.high,
-                          )),
+                      "assets/background/light1.jpg",
+                      height: MediaQuery.sizeOf(context).height * 0.8,
+                      width: MediaQuery.sizeOf(context).width,
+                      fit: BoxFit.cover,
+                      filterQuality: FilterQuality.high,
+                    )),
                     StreamBuilder(
                       stream: FireDBHelper.helper
                           .getLiveChat(AuthHelper.authHelper.user!.uid, model.uid!),
@@ -148,14 +148,14 @@ class _ChatScreenState extends State<ChatScreen> {
                                                       style: TextStyle(
                                                           color: Colors.white,
                                                           fontWeight:
-                                                              FontWeight.bold),
+                                                          FontWeight.bold),
                                                     ),
                                                   ),
                                                   ElevatedButton(
                                                     onPressed: () {
                                                       FireDBHelper.helper
                                                           .deleteChat(
-                                                              l1[index].id!);
+                                                          l1[index].id!);
                                                       Get.back();
                                                     },
                                                     child: const Text(
@@ -163,7 +163,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                       style: TextStyle(
                                                           color: Colors.white,
                                                           fontWeight:
-                                                              FontWeight.bold),
+                                                          FontWeight.bold),
                                                     ),
                                                   )
                                                 ]);
@@ -171,42 +171,41 @@ class _ChatScreenState extends State<ChatScreen> {
                                         },
                                         child: Container(
                                           alignment: l1[index].uid ==
-                                                  AuthHelper.authHelper.user!.uid
+                                              AuthHelper.authHelper.user!.uid
                                               ? Alignment.centerRight
                                               : Alignment.centerLeft,
                                           child: Container(
                                             width: l1[index].msg!.length >= 60
                                                 ? MediaQuery.sizeOf(context).width *
-                                                    0.45
+                                                0.45
                                                 : l1[index].msg!.length >= 15
-                                                    ? MediaQuery.sizeOf(context)
-                                                            .width *
-                                                        0.30
-                                                    : MediaQuery.sizeOf(context)
-                                                            .width *
-                                                        0.20,
+                                                ? MediaQuery.sizeOf(context)
+                                                .width *
+                                                0.30
+                                                : MediaQuery.sizeOf(context)
+                                                .width *
+                                                0.20,
                                             margin: const EdgeInsets.all(10),
                                             padding: const EdgeInsets.all(10),
                                             decoration: BoxDecoration(
                                               color: themeController.pTheme.value
                                                   ? l1[index].uid ==
-                                                          AuthHelper
-                                                              .authHelper.user!.uid
-                                                      ? const Color(0xff005C4B)
-                                                      : const Color(0xff202C33)
+                                                  AuthHelper
+                                                      .authHelper.user!.uid
+                                                  ? const Color(0xff005C4B)
+                                                  : const Color(0xff202C33)
                                                   : l1[index].uid ==
-                                                          AuthHelper
-                                                              .authHelper.user!.uid
-                                                      ? const Color(0xffD9FDD3)
-                                                      : Colors.grey
-                                                          .withOpacity(0.3),
+                                                  AuthHelper
+                                                      .authHelper.user!.uid
+                                                  ? const Color(0xffD9FDD3)
+                                                  : Colors.white,
                                               borderRadius: BorderRadius.circular(
-                                                20
-                                                 ),
+                                                  20
+                                              ),
                                             ),
                                             child: Column(
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
+                                              CrossAxisAlignment.center,
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
                                                 Center(
@@ -214,7 +213,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                     l1[index].msg!,
                                                     style: const TextStyle(
                                                         fontWeight:
-                                                            FontWeight.bold),
+                                                        FontWeight.bold),
                                                   ),
                                                 ),
                                                 const SizedBox(
@@ -223,10 +222,10 @@ class _ChatScreenState extends State<ChatScreen> {
                                                 Align(
                                                   alignment: Alignment.centerRight,
                                                   child: l1[index].displayDate ==
-                                                          "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}"
+                                                      "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}"
                                                       ? Text("${l1[index].time}")
                                                       : Text(
-                                                          "${l1[index].displayDate}  ${l1[index].time}"),
+                                                      "${l1[index].displayDate}  ${l1[index].time}"),
                                                 )
                                               ],
                                             ),
@@ -265,10 +264,10 @@ class _ChatScreenState extends State<ChatScreen> {
                               uid: AuthHelper.authHelper.user!.uid,
                               date: "${DateTime.now()}",
                               time:
-                                  "${DateTime.now().hour}:${DateTime.now().minute}",
+                              "${DateTime.now().hour}:${DateTime.now().minute}",
                               msg: txtMessage.text,
                               displayDate:
-                                  "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}");
+                              "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}");
                           await FireDBHelper.helper.sendMessage(c1, model);
                           txtMessage.clear();
                           FocusScope.of(context).requestFocus(FocusNode());
