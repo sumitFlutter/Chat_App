@@ -7,7 +7,7 @@ class ThemeController extends GetxController{
   Rx<IconData> themeMode=Icons.dark_mode.obs;
   RxBool pTheme=false.obs;
   ShareHelper shareHelper=ShareHelper();
-  RxString bgImage="assets/image/background/light.jpg".obs;
+  RxString bgImage="assets/background/light1.jpg".obs;
   void setTheme()
   async {
     theme.value=!theme.value;
@@ -17,26 +17,26 @@ class ThemeController extends GetxController{
     {
       mode.value=ThemeMode.dark;
       themeMode.value=Icons.light_mode;
-      bgImage.value="assets/image/background/dark.jpg";
+      bgImage.value="assets/background/dark.jpg";
     }
     else if(pTheme.value==false)
     {
       mode.value=ThemeMode.light;
       themeMode.value=Icons.dark_mode;
-      bgImage.value="assets/image/background/light.jpg";
+      bgImage.value="assets/background/light1.jpg";
     }
     else
     {
       mode.value=ThemeMode.light;
       themeMode.value=Icons.dark_mode;
-      bgImage.value="assets/image/background/light.jpg";
+      bgImage.value="assets/background/light1.jpg";
     }
   }
   void getTheme()
   async{
     if(await shareHelper.applyTheme()==null)
     {
-      pTheme.value=false;
+      pTheme.value=true;
     }
     else
     {
@@ -46,20 +46,20 @@ class ThemeController extends GetxController{
     {
       mode.value=ThemeMode.dark;
       themeMode.value=Icons.light_mode;
-      bgImage.value="assets/image/background/dark.jpg";
+      bgImage.value="assets/background/dark.jpg";
     }
     else if(pTheme.value==false)
     {
       mode.value=ThemeMode.light;
       themeMode.value=Icons.dark_mode;
-      bgImage.value="assets/image/background/light.jpg";
+      bgImage.value="assets/background/light1.jpg";
 
     }
     else
     {
       mode.value=ThemeMode.light;
       themeMode.value=Icons.dark_mode;
-      bgImage.value="assets/image/background/light.jpg";
+      bgImage.value="assets/background/light1.jpg";
     }
   }
 }

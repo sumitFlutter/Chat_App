@@ -11,7 +11,6 @@ class AuthHelper{
           email: emailAddress,
           password: password,
       );
-      checkUser();
       return "Success";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -72,7 +71,6 @@ class AuthHelper{
    try {
      final userCredential =
          await FirebaseAuth.instance.signInAnonymously();
-     checkUser();
      return "Success";
    } on FirebaseAuthException catch (e) {
      switch (e.code) {
