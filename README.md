@@ -1,3 +1,5 @@
+<img src="https://github.com/sumitFlutter/Chat_App/assets/153794386/173a8eaf-9cbb-44ba-9c08-c077391c9cad" height="400px"   width="200px"/>
+<img src="https://github.com/sumitFlutter/Chat_App/assets/153794386/14f225ee-6e63-4179-a280-953c7d9d39fa" height="400px"   width="200px"/>
 # Galaxy Chat
 
 A new Flutter project.
