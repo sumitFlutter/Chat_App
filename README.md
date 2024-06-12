@@ -11,10 +11,6 @@ A few resources to get you started if this is your first Flutter project:
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-<img src=' 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
 <img src="https://github.com/sumitFlutter/Chat_App/assets/153794386/5b01fcc4-7b9e-4917-8c30-41a1537f71eb" height="400px"   width="200px"/>
 <img src="https://github.com/sumitFlutter/Chat_App/assets/153794386/dfa6304a-09f0-4065-9b3d-50e1c64a6196" height="400px"   width="200px"/>
 <img src="https://github.com/sumitFlutter/Chat_App/assets/153794386/9c5cf951-554a-4876-8ebe-1a5ae3a0f07d" height="400px"   width="200px"/>
