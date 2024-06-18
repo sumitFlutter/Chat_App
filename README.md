@@ -21,6 +21,8 @@ A few resources to get you started if this is your first Flutter project:
 <img src="https://github.com/sumitFlutter/Chat_App/assets/153794386/14f225ee-6e63-4179-a280-953c7d9d39fa" height="400px"   width="200px"/>
 <img src="https://github.com/sumitFlutter/Chat_App/assets/153794386/fcb8e460-dd66-4d05-86d1-ad04b01399cc" height="400px"   width="200px"/>
 <img src="https://github.com/sumitFlutter/Chat_App/assets/153794386/2c63d7c7-9614-4317-b815-6d90fe7a1024" height="400px"   width="200px"/>
+<img src="https://github.com/sumitFlutter/Chat_App/assets/153794386/4e51f4c7-384f-4a25-ad98-a375e426937c" height="400px"   width="200px"/>
+<img src="https://github.com/sumitFlutter/Chat_App/assets/153794386/c541e72d-eac7-421a-99a4-4dd9b3cfce32" height="400px"   width="200px"/>
 
 
 
