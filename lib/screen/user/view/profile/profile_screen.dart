@@ -140,6 +140,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       {
                         return"required";
                       }
+                      return null;
                     },
                     controller: txtAbout,
                     decoration: const InputDecoration(
