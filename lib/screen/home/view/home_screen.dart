@@ -1,6 +1,4 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,23 +16,29 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Obx(() =>
-            Text("Galaxy Chat",style: TextStyle(color:themeController.pTheme.value==false?const Color(0xff005C4B):Colors.white),)),
+        title: Obx(() => Text(
+              "Galaxy Chat",
+              style: TextStyle(
+                  color: themeController.pTheme.value == false
+                      ? const Color(0xff005C4B)
+                      : Colors.white),
+            )),
         actions: [
           IconButton(
             onPressed: () {
-              NotificationService.service.schedulingNotification(title: 'testing notification',msg: "hi my name is sumit!");
+              NotificationService.service.schedulingNotification(
+                  title: 'testing notification', msg: "hi my name is sumit!");
             },
             icon: const Icon(Icons.timer),
           ),
           IconButton(
             onPressed: () {
-              NotificationService.service.showNotification(title: 'testing notification',body: "hi my name is sumit!");
+              NotificationService.service.showNotification(
+                  title: 'testing notification', body: "hi my name is sumit!");
             },
             icon: const Icon(Icons.notifications),
           ),
@@ -90,21 +94,29 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () async {
-                    await FireDBHelper.helper.getChat(AuthHelper.authHelper.user!.uid, l1[index].uid!);
-                    Get.toNamed('chat',arguments: l1[index]);
+                    await FireDBHelper.helper.getChat(
+                        AuthHelper.authHelper.user!.uid, l1[index].uid!);
+                    Get.toNamed('chat', arguments: l1[index]);
                   },
                   child: ListTile(
-                    leading: CircleAvatar(radius: 30,child: Center(child: Text(l1[index].name!.substring(0,1).toUpperCase(),style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)),),
-                    title:Text("${l1[index].name}"),
+                    leading: CircleAvatar(
+                      radius: 30,
+                      child: Center(
+                          child: Text(
+                        l1[index].name!.substring(0, 1).toUpperCase(),
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      )),
+                    ),
+                    title: Text("${l1[index].name}"),
                     subtitle: Text("${l1[index].about}"),
                   ),
                 );
               },
             );
           }
-        return Container();
+          return Container();
         },
-
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -117,74 +129,110 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              const SizedBox(height: 10,),
-            FirebaseAuth.instance.currentUser!.photoURL == null
+              const SizedBox(
+                height: 10,
+              ),
+              AuthHelper.authHelper.user!.photoURL == null
                   ? CircleAvatar(
-                radius: 50,
-                child: Center(child: Text(FireDBHelper.helper.currentUser.name!.substring(0,1).toUpperCase(),style: const TextStyle(fontSize: 50,fontWeight: FontWeight.w500),),),)
+                      radius: 50,
+                      child: Center(
+                        child: Text(
+                          FireDBHelper.helper.currentUser.name!
+                              .substring(0, 1)
+                              .toUpperCase(),
+                          style: const TextStyle(
+                              fontSize: 50, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    )
                   : CircleAvatar(
-                     radius: 50,
+                      radius: 50,
                       backgroundImage: NetworkImage(
-                          "${FirebaseAuth.instance.currentUser!.photoURL}"),
+                          "${AuthHelper.authHelper.user!.photoURL}"),
                     ),
               const SizedBox(
                 height: 5,
               ),
               Visibility(
-                  visible:
-                      FirebaseAuth.instance.currentUser!.displayName !=
-                          null,
-                  child: Text(
-                    "${FirebaseAuth.instance.currentUser!.displayName}",
-                    style: const TextStyle(fontSize: 18),
+                  visible: AuthHelper.authHelper.user!.displayName != null,
+                  child: AuthHelper.authHelper.user!.isAnonymous
+                      ? Text(FireDBHelper.helper.currentUser.name!)
+                      : Text(
+                          "${AuthHelper.authHelper.user!.displayName}",
+                          style: const TextStyle(fontSize: 18),
+                        )),
+              Visibility(
+                visible: AuthHelper.authHelper.user!.displayName != null,
+                child: const Divider(),
+              ),
+              Visibility(
+                visible: AuthHelper.authHelper.user!.displayName != null,
+                child: const SizedBox(
+                  height: 4,
+                ),
+              ),
+              Visibility(
+                  visible: AuthHelper.authHelper.user!.email != null,
+                  child: AuthHelper.authHelper.user!.isAnonymous
+                      ? const Text("You are a Guest!")
+                      : Text(
+                          AuthHelper.authHelper.user!.email!,
+                          style: const TextStyle(fontSize: 18),
+                        )),
+              Visibility(
+                  visible: AuthHelper.authHelper.user!.email != null,
+                  child: const Divider()),
+              Visibility(
+                  visible: AuthHelper.authHelper.user!.email != null,
+                  child: const SizedBox(
+                    height: 4,
                   )),
-              Visibility(
-            visible:
-            FirebaseAuth.instance.currentUser!.displayName !=
-                null,
-            child: const Divider(),),
-              Visibility(
-                visible:
-                FirebaseAuth.instance.currentUser!.displayName !=
-                    null,
-                child: const SizedBox(height: 4,),),
-              Visibility(
-                  visible:FirebaseAuth.instance.currentUser!.email !=
-                      null,
-                  child:
-                  Text(
-                    "${FirebaseAuth.instance.currentUser!.email}",
-                    style: const TextStyle(fontSize: 18),
-                  )),
-          Visibility(
-            visible:FirebaseAuth.instance.currentUser!.email !=
-                null,
-            child:
-            const Divider()),
-              Visibility(
-                  visible:FirebaseAuth.instance.currentUser!.email !=
-                      null,
-                  child:
-                  const SizedBox(height: 4,)),
               Text(FireDBHelper.helper.currentUser.about!),
               const Divider(),
-              const SizedBox(height: 4,),
-              Center(child: TextButton.icon(onPressed: () {
-                Get.toNamed("profile");
-              }, label: const Text("Edit Profile"),icon: const Icon(Icons.edit),),),
-              const SizedBox(height: 12,),
+              const SizedBox(
+                height: 4,
+              ),
+              Center(
+                child: TextButton.icon(
+                  onPressed: () {
+                    Get.toNamed("profile");
+                  },
+                  label: const Text("Edit Profile"),
+                  icon: const Icon(Icons.edit),
+                ),
+              ),
+              const SizedBox(
+                height: 12,
+              ),
               ListTile(
                 onTap: () {
                   themeController.setTheme();
                 },
-                leading:  Obx(() => Icon(themeController.themeMode.value)),
+                leading: Obx(() => Icon(themeController.themeMode.value)),
                 title: const Text("Change Theme"),
               ),
-              const SizedBox(height: 12,),
+              const SizedBox(
+                height: 12,
+              ),
               ListTile(
                 onTap: () {
-                  AuthHelper.authHelper.logOut();
-                  Get.toNamed('SignIn');
+                  Get.defaultDialog(
+                      title: "Are Sure",
+                      content:
+                          const Text("Are You Sure To LogOut This Account"),
+                      actions: [
+                        ElevatedButton(
+                            onPressed: () {
+                              Get.back();
+                            },
+                            child: const Text("No!")),
+                        ElevatedButton(
+                            onPressed: () {
+                              AuthHelper.authHelper.logOut();
+                              Get.offAllNamed('SignIn');
+                            },
+                            child: const Text("Yes!")),
+                      ]);
                 },
                 title: const Text("Logout"),
                 leading: const Icon(Icons.logout_rounded),
