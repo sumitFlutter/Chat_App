@@ -1,7 +1,7 @@
 # Galaxy Chat
 
 A new Flutter project using firebase 
-
+<h1> Screenshots</h1>
 
 
 <img src="https://github.com/sumitFlutter/Chat_App/assets/153794386/5b01fcc4-7b9e-4917-8c30-41a1537f71eb" height="400px"   width="200px"/>
@@ -18,6 +18,6 @@ A new Flutter project using firebase
 <img src="https://github.com/sumitFlutter/Chat_App/assets/153794386/c541e72d-eac7-421a-99a4-4dd9b3cfce32" height="400px"   width="200px"/>
 
 
-
+<h1> video </h1>
 
 https://github.com/sumitFlutter/Chat_App/assets/153794386/d81e52df-1ae0-4177-bb0d-a11622ee2f27
