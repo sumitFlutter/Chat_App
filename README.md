@@ -1,15 +1,8 @@
 # Galaxy Chat
 
-A new Flutter project.
+A new Flutter project using firebase 
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
 <img src="https://github.com/sumitFlutter/Chat_App/assets/153794386/5b01fcc4-7b9e-4917-8c30-41a1537f71eb" height="400px"   width="200px"/>
 <img src="https://github.com/sumitFlutter/Chat_App/assets/153794386/4f9fcde8-2534-47c6-ac93-cfd5f5246fbb" height="400px"   width="200px"/>
